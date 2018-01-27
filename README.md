@@ -1,6 +1,6 @@
 # Erridiom
 
-As a result of low budget constrainsts and sloppy development the world is plagued with bad software. Good UX and UI are key to preventing users from making catastrophic mistakes when using critical systems. This is exemplified by the recent Hawaii UX incident.
+As a result of low budget constrainsts and sloppy development, the world is plagued with bad software. Good UX and UI are key to preventing users from making catastrophic mistakes when using critical systems. This is exemplified by the recent Hawaii UX incident.
 
 Erridiom is a task/data based procedural UI generator for helping users to adopt defensive software usage strategies. Users are presented with a UI that they have never seen before and are given a task to complete. While completing their task, users must interact with UI idioms that can easily cause mistakes. A list of these erridioms is enumerated below (In README.md). Mistakes made by the user will cause large setbacks in their current task and will hopefully help users to learn how to avoid these common bad UI instances.
 

@@ -1,7 +1,7 @@
 {
-  "name": "webpack-ts-react-babel-d3-sass",
+  "name": "erridiom",
   "version": "0.0.0",
-  "description": "Starter project for webpack, typescript, react, babel d3, and sass",
+  "description": "HackEd 2018 project",
   "main": "",
   "author": "",
   "dependencies": {},
