@@ -1,3 +1,3 @@
 export default abstract class Task {
-    abstract getEntity(id: string): {}
+    abstract getEntity(id: string): any
 }

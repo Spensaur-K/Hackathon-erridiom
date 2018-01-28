@@ -18,7 +18,7 @@ export function registerGUIManager(assign: GUIManager) {
 }
 
 export function registerIdiom(idiom: Idiom) {
-    knownIdioms.add(idiom);
+    knownIdioms.add(createContainer(idiom));
 }
 
 function idiomsWithRequirements(idiomPool: Iterable<Idiom>, req: Requirements): Idiom[] {
@@ -50,7 +50,7 @@ export function matchRequirements<T extends Requirements>(reqs: T[]): [T, Idiom]
 
 function createContainer(idiom: Idiom) {
     class Container extends Component {
-        constructor(props) {
+        constructor(props: {}) {
             super(props);
             this.state = {};
         }
@@ -58,18 +58,22 @@ function createContainer(idiom: Idiom) {
             return <idiom.component {...this.state} />;
         }
     }
+    return {
+        __proto__: idiom,
+        component: Container
+    } as any as Idiom;
 }
 
 export const actions = {
     examineEntity(id: string) {
-        const [state, single] = manager.getProvider("singleEntityReader");
-        single(state, manager.task.getEntity(id));
+        const singleEntityReader = manager.getProvider("singleEntityReader");
+        singleEntityReader(manager.task.getEntity(id));
     }
 }
 
 interface provides {
-    multipleEntityReader(state: {}, entities: {});
-    singleEntityReader(state: {}, entity: {});
+    multipleEntityReader(state: {}, entities: {}): void;
+    singleEntityReader(state: {}, entity: {}): void;
 }
 
 export type Action = keyof (typeof actions);

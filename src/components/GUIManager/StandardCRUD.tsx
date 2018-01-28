@@ -1,5 +1,4 @@
 import GUIManager from "./GUIManager";
-import { Requirements } from "./registration";
 import "./StandardCRUD.scss";
 
 

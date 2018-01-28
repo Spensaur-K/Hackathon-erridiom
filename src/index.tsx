@@ -1,4 +1,4 @@
 import { render } from "react-dom";
-import Main from "./components/NewComponent";
+import { Manager } from "./tasks/contacts/Contacts";
 
-render(<Main />, document.getElementById("app"));
+render(<Manager.Renderable />, document.getElementById("app"));
