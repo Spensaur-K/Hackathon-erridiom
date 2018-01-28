@@ -30061,7 +30061,6 @@ function ExamineEntity(_ref) {
     var data = _ref.data,
         actions = _ref.actions;
 
-    debugger;
     return React.createElement(
         "div",
         { className: "ExamineEntity" },
@@ -30107,8 +30106,11 @@ var registration_1 = __webpack_require__(97);
  * @param entities data to display
  * @param importantProps props to extract and display from each entity
  */
-function ReadEntities(props) {
-    props;
+function ReadEntities(_ref) {
+    var data = _ref.data,
+        actions = _ref.actions;
+
+    debugger;
     return React.createElement(
         "div",
         { className: "ReadEntities" },
