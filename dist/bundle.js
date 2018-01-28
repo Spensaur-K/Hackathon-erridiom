@@ -3266,7 +3266,6 @@ var react_1 = __webpack_require__(32);
 var manager = null;
 var knownIdioms = new Set();
 function registerGUIManager(assign) {
-    alert();
     if (manager != null) {
         throw new Error("Manager already set");
     }
@@ -29951,7 +29950,6 @@ var default_1 = function (_GUIManager_1$default) {
     _createClass(default_1, [{
         key: "setup",
         value: function setup(actions) {
-            debugger;
             actions.displayEntities(this.task.getEntities());
         }
     }]);

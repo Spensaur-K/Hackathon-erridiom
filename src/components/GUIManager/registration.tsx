@@ -11,7 +11,6 @@ let manager: GUIManager = null as any;
 const knownIdioms = new Set<Idiom>();
 
 export function registerGUIManager(assign: GUIManager) {
-    alert();
     if (manager != null) {
         throw new Error("Manager already set");
     }

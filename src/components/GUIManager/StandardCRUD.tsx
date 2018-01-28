@@ -28,7 +28,6 @@ export default class extends GUIManager {
         }
     ] as NamedRequirements[]
     setup(actions) {
-        debugger;
         actions.displayEntities(this.task.getEntities());
     }
 }
