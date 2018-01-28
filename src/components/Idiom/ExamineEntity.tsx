@@ -13,8 +13,8 @@ import { registerIdiom } from "../GUIManager/registration";
  * @param entities data to display
  * @param importantProps props to extract and display from each entity
  */
-function ExamineEntity(props: any) {
-    props;
+function ExamineEntity({ data, actions }) {
+    debugger;
     return (<div className="ExamineEntity">Hello, World!</div>);
 }
 

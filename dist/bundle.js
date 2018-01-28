@@ -29840,7 +29840,6 @@ function StandardCRUD(components) {
     var List = components.List,
         Examine = components.Examine;
 
-    debugger;
     return React.createElement(
         "div",
         { className: "StandardCRUD" },
@@ -30058,8 +30057,11 @@ var registration_1 = __webpack_require__(97);
  * @param entities data to display
  * @param importantProps props to extract and display from each entity
  */
-function ExamineEntity(props) {
-    props;
+function ExamineEntity(_ref) {
+    var data = _ref.data,
+        actions = _ref.actions;
+
+    debugger;
     return React.createElement(
         "div",
         { className: "ExamineEntity" },

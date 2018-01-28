@@ -3,7 +3,6 @@ import "./StandardCRUD.scss";
 
 function StandardCRUD(components) {
     const { List, Examine } = components;
-    debugger;
     return (<div className="StandardCRUD">
         <List />
         <Examine />
