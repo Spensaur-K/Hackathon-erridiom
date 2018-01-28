@@ -3342,6 +3342,7 @@ function createContainer(idiom) {
                     comps = _idiomComponents$get.comps;
 
                 comps.add(this);
+                this.setState(state);
             }
         }, {
             key: "componentWillUnmount",
@@ -3363,6 +3364,7 @@ function createContainer(idiom) {
                 }
                 var obj = idiomComponents.get(idiom);
                 obj.state = state;
+                debugger;
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
                 var _iteratorError = undefined;
@@ -30196,6 +30198,7 @@ function ReadEntities(_ref) {
     var data = _ref.data,
         act = _ref.act;
 
+    debugger;
     return React.createElement(
         "div",
         { className: "ReadEntities" },
@@ -30203,6 +30206,7 @@ function ReadEntities(_ref) {
     );
 }
 function multipleEntityReader(state, entities) {
+    debugger;
     return Object.assign({}, state, { entities: entities });
 }
 var idiom = {

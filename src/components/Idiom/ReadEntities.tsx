@@ -14,10 +14,12 @@ import { registerIdiom, actions } from "../GUIManager/registration";
  * @param importantProps props to extract and display from each entity
  */
 function ReadEntities({ data, act }: { data: any, act }) {
+    debugger;
     return (<div className="ReadEntities">Hello, World!</div>);
 }
 
 function multipleEntityReader(state: {}, entities: {}) {
+    debugger;
     return { ...state, entities };
 }
 

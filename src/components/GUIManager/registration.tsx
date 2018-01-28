@@ -68,6 +68,7 @@ function createContainer(idiom: Idiom) {
             }
             const { state, comps } = idiomComponents.get(idiom) as { state: {}, comps: Set<Component> };
             comps.add(this);
+            this.setState(state);
         }
         componentWillUnmount() {
             if (!idiomComponents.has(idiom)) {
@@ -82,6 +83,7 @@ function createContainer(idiom: Idiom) {
             }
             const obj = idiomComponents.get(idiom) as { state: {}, comps: Set<Component> };
             obj.state = state;
+            debugger;
             for (const comp of obj.comps) {
                 comp.setState(state);
             }
