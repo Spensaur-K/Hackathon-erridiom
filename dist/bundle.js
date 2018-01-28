@@ -10011,6 +10011,8 @@ module.exports = function (regExp, replace) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_dom_1 = __webpack_require__(347);
 var Contacts_1 = __webpack_require__(356);
+var registration_1 = __webpack_require__(97);
+registration_1.registerGUIManager(Contacts_1.Manager);
 react_dom_1.render(React.createElement(Contacts_1.Manager.Renderable, null), document.getElementById("app"));
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
@@ -29923,6 +29925,7 @@ var GUIManager = function () {
             return _this.component(_this.findComponents());
         };
         this.task = task;
+        this.setup(registration_1.actions);
     }
     /**
      * Hacky, but it has to happen post-construction

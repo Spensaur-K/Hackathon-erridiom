@@ -16,6 +16,7 @@ export default abstract class GUIManager {
     public readonly task: Task;
     constructor(task: Task) {
         this.task = task;
+        this.setup(actions);
     }
     protected abstract setup(act: typeof actions): void
     protected abstract component: (components: { [key: string]: ((state: {}) => ReactElement<{}>) }) => ReactElement<{}>
