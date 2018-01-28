@@ -1,23 +1,27 @@
-import GUIManager from "./GUIManager";
+import GUIManager, { NamedRequirements } from "./GUIManager";
 import "./StandardCRUD.scss";
 
-
-function StandardCRUD() {
-    return (<div className="StandardCRUD">Hello, World!</div>);
+function StandardCRUD(components) {
+    const { List, Examine } = components;
+    debugger;
+    return (<div className="StandardCRUD">
+        <List />
+        <Examine />
+    </div>);
 }
 
 export default class extends GUIManager {
     component = StandardCRUD
-    requirements: [
+    requirements = [
         {
-            name: "list",
+            name: "List",
             actions: ["examineEntity"],
             provides: ["multipleEntityReader"]
         },
         {
-            name: "examine",
+            name: "Examine",
             actions: null,
             provides: ["singleEntityReader"]
         }
-    ];
+    ] as NamedRequirements[]
 }

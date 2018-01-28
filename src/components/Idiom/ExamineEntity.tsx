@@ -3,7 +3,7 @@
  * Create a frame for a component that takes an entity
  */
 
-import "./ReadEntities.scss";
+import "./ExamineEntity.scss";
 import Idiom from "./Idiom";
 
 import { registerIdiom } from "../GUIManager/registration";
@@ -13,20 +13,20 @@ import { registerIdiom } from "../GUIManager/registration";
  * @param entities data to display
  * @param importantProps props to extract and display from each entity
  */
-function ReadEntities(props: any) {
-    props
-    return (<div className="ReadEntities">Hello, World!</div>);
+function ExamineEntity(props: any) {
+    props;
+    return (<div className="ExamineEntity">Hello, World!</div>);
 }
 
-function multipleEntityReader(state: {}, entities: {}) {
-    state;entities;
+function singleEntityReader(state: {}, entity: {}) {
+    state;entity;
 }
 
 const idiom: Idiom = {
-    component: ReadEntities,
+    component: ExamineEntity,
     features: {
-        actions: ["examineEntity"],
-        provides: { multipleEntityReader }
+        actions: [],
+        provides: { singleEntityReader }
     }
 }
 
