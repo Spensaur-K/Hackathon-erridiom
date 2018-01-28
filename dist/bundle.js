@@ -30198,7 +30198,6 @@ function ReadEntities(_ref) {
     var data = _ref.data,
         act = _ref.act;
 
-    debugger;
     return React.createElement(
         "div",
         { className: "ReadEntities" },
@@ -30206,7 +30205,6 @@ function ReadEntities(_ref) {
     );
 }
 function multipleEntityReader(state, entities) {
-    debugger;
     return Object.assign({}, state, { entities: entities });
 }
 var idiom = {
