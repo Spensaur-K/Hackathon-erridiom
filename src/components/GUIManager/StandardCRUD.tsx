@@ -23,4 +23,8 @@ export default class extends GUIManager {
             provides: ["singleEntityReader"]
         }
     ] as NamedRequirements[]
+    setup(actions) {
+        debugger;
+        actions.displayEntities(this.task.getEntities());
+    }
 }

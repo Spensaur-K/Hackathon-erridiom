@@ -49,14 +49,15 @@ export function matchRequirements<T extends Requirements>(reqs: T[]): [T, Idiom]
 }
 
 function createContainer(idiom: Idiom) {
-    const idiomActions = idiom.features.actions.map(action => actions[action]);
+    const idiomActions = {};
+    idiom.features.actions.forEach(action => idiomActions[action] = actions[action]);
     class Container extends Component {
         constructor(props: {}) {
             super(props);
             this.state = {};
         }
         render() {
-            return <idiom.component {...({data: this.state, actions: idiomActions} as any)} />;
+            return <idiom.component {...({data: this.state, act: idiomActions} as any)} />;
         }
     }
     return {
@@ -71,9 +72,8 @@ export const actions = {
         singleEntityReader(manager.task.getEntity(id));
     },
     displayEntities(entities: {}[]) {
-        const singleEntityReader = manager.getProvider("singleEntityReader");
-        entities;singleEntityReader;
-        //singleEntityReader(manager.task.getEntity(id));
+        const multipleEntityReader = manager.getProvider("multipleEntityReader");
+        multipleEntityReader(entities);
     }
 }
 

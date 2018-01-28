@@ -6,20 +6,19 @@
 import "./ReadEntities.scss";
 import Idiom from "./Idiom";
 
-import { registerIdiom } from "../GUIManager/registration";
+import { registerIdiom, actions } from "../GUIManager/registration";
 
 /**
  * 
  * @param entities data to display
  * @param importantProps props to extract and display from each entity
  */
-function ReadEntities({ data, actions }) {
-    debugger;
+function ReadEntities({ data, act }: { data: any, act }) {
     return (<div className="ReadEntities">Hello, World!</div>);
 }
 
 function multipleEntityReader(state: {}, entities: {}) {
-    state;entities;
+    return { ...state, entities };
 }
 
 const idiom: Idiom = {

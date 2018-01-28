@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import Task from "../../tasks/Task";
 import Idiom from "../Idiom/Idiom"
-import { Requirements, Provide, matchRequirements } from "./registration";
+import { Requirements, Provide, matchRequirements, actions } from "./registration";
 
 export type NamedRequirements = { name: string } & Requirements;
 
@@ -17,6 +17,7 @@ export default abstract class GUIManager {
     constructor(task: Task) {
         this.task = task;
     }
+    protected abstract setup(act: typeof actions): void
     protected abstract component: (components: { [key: string]: ((state: {}) => ReactElement<{}>) }) => ReactElement<{}>
     protected abstract readonly requirements: NamedRequirements[];
     private __components: { [key: string]: ((state: {}) => ReactElement<{}>) } = null as any;
@@ -29,7 +30,7 @@ export default abstract class GUIManager {
         const pairs = matchRequirements(this.requirements);
         const components: {[key: string]: ((state: {}) => ReactElement<{}>)} = {};
         for (const [{ name }, { component }] of pairs) {
-            components[name] = component;
+            components[name] = component as any;
         }
         this.__components = components;
         return this.__components;

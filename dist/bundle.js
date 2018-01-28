@@ -3307,8 +3307,9 @@ function matchRequirements(reqs) {
 }
 exports.matchRequirements = matchRequirements;
 function createContainer(idiom) {
-    var idiomActions = idiom.features.actions.map(function (action) {
-        return exports.actions[action];
+    var idiomActions = {};
+    idiom.features.actions.forEach(function (action) {
+        return idiomActions[action] = exports.actions[action];
     });
 
     var Container = function (_react_1$Component) {
@@ -3326,7 +3327,7 @@ function createContainer(idiom) {
         _createClass(Container, [{
             key: "render",
             value: function render() {
-                return React.createElement(idiom.component, { data: this.state, actions: idiomActions });
+                return React.createElement(idiom.component, { data: this.state, act: idiomActions });
             }
         }]);
 
@@ -3344,10 +3345,8 @@ exports.actions = {
         singleEntityReader(manager.task.getEntity(id));
     },
     displayEntities: function displayEntities(entities) {
-        var singleEntityReader = manager.getProvider("singleEntityReader");
-        entities;
-        singleEntityReader;
-        //singleEntityReader(manager.task.getEntity(id));
+        var multipleEntityReader = manager.getProvider("multipleEntityReader");
+        multipleEntityReader(entities);
     }
 };
 ;
@@ -27384,6 +27383,11 @@ var Contacts = function (_Task_1$default) {
 
             throw "died";
         }
+    }, {
+        key: "getEntities",
+        value: function getEntities() {
+            return data_js_1.default;
+        }
     }]);
 
     return Contacts;
@@ -29827,6 +29831,8 @@ exports.default = [{
 "use strict";
 /* WEBPACK VAR INJECTION */(function(React) {
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -29868,6 +29874,14 @@ var default_1 = function (_GUIManager_1$default) {
         }];
         return _this;
     }
+
+    _createClass(default_1, [{
+        key: "setup",
+        value: function setup(actions) {
+            debugger;
+            actions.displayEntities(this.task.getEntities());
+        }
+    }]);
 
     return default_1;
 }(GUIManager_1.default);
@@ -30059,7 +30073,7 @@ var registration_1 = __webpack_require__(97);
  */
 function ExamineEntity(_ref) {
     var data = _ref.data,
-        actions = _ref.actions;
+        act = _ref.act;
 
     return React.createElement(
         "div",
@@ -30108,9 +30122,8 @@ var registration_1 = __webpack_require__(97);
  */
 function ReadEntities(_ref) {
     var data = _ref.data,
-        actions = _ref.actions;
+        act = _ref.act;
 
-    debugger;
     return React.createElement(
         "div",
         { className: "ReadEntities" },
@@ -30118,8 +30131,7 @@ function ReadEntities(_ref) {
     );
 }
 function multipleEntityReader(state, entities) {
-    state;
-    entities;
+    return Object.assign({}, state, { entities: entities });
 }
 var idiom = {
     component: ReadEntities,

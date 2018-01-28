@@ -11,6 +11,9 @@ class Contacts extends Task {
         }
         throw "died";
     }
+    getEntities() {
+        return data;
+    }
 }
 
 export const Manager = new StandardCrud(new Contacts);
