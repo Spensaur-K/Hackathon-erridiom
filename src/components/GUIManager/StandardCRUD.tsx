@@ -10,6 +10,10 @@ function StandardCRUD(components) {
 }
 
 export default class extends GUIManager {
+    constructor(t) {
+        super(t);
+        this.postConstruct();
+    }
     component = StandardCRUD
     requirements = [
         {

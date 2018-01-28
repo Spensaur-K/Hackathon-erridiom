@@ -11,6 +11,7 @@ let manager: GUIManager = null as any;
 const knownIdioms = new Set<Idiom>();
 
 export function registerGUIManager(assign: GUIManager) {
+    alert();
     if (manager != null) {
         throw new Error("Manager already set");
     }
@@ -48,6 +49,9 @@ export function matchRequirements<T extends Requirements>(reqs: T[]): [T, Idiom]
     });
 }
 
+
+const idiomComponents = new Map<Idiom, { state: {}, comps: Set<Component> }>();
+
 function createContainer(idiom: Idiom) {
     const idiomActions = {};
     idiom.features.actions.forEach(action => idiomActions[action] = actions[action]);
@@ -57,7 +61,38 @@ function createContainer(idiom: Idiom) {
             this.state = {};
         }
         render() {
-            return <idiom.component {...({data: this.state, act: idiomActions} as any)} />;
+            return <idiom.component {...({ data: this.state, act: idiomActions } as any) } />;
+        }
+        componentDidMount() {
+            if (!idiomComponents.has(idiom)) {
+                idiomComponents.set(idiom, { state: {}, comps: new Set });
+            }
+            const { state, comps } = idiomComponents.get(idiom) as { state: {}, comps: Set<Component> };
+            comps.add(this);
+        }
+        componentWillUnmount() {
+            if (!idiomComponents.has(idiom)) {
+                idiomComponents.set(idiom, { state: {}, comps: new Set });
+            }
+            const { comps } = idiomComponents.get(idiom) as { state: {}, comps: Set<Component> };
+            comps.delete(this);
+        }
+        static setState(state: {}) {
+            if (!idiomComponents.has(idiom)) {
+                idiomComponents.set(idiom, { state: {}, comps: new Set });
+            }
+            const obj = idiomComponents.get(idiom) as { state: {}, comps: Set<Component> };
+            obj.state = state;
+            for (const comp of obj.comps) {
+                comp.setState(state);
+            }
+        }
+        static getState() {
+            if (!idiomComponents.has(idiom)) {
+                idiomComponents.set(idiom, { state: {}, comps: new Set });
+            }
+            const { state } = idiomComponents.get(idiom) as { state: {} };
+            return state;
         }
     }
     return {

@@ -3266,6 +3266,7 @@ var react_1 = __webpack_require__(32);
 var manager = null;
 var knownIdioms = new Set();
 function registerGUIManager(assign) {
+    alert();
     if (manager != null) {
         throw new Error("Manager already set");
     }
@@ -3306,6 +3307,7 @@ function matchRequirements(reqs) {
     });
 }
 exports.matchRequirements = matchRequirements;
+var idiomComponents = new Map();
 function createContainer(idiom) {
     var idiomActions = {};
     idiom.features.actions.forEach(function (action) {
@@ -3328,6 +3330,76 @@ function createContainer(idiom) {
             key: "render",
             value: function render() {
                 return React.createElement(idiom.component, { data: this.state, act: idiomActions });
+            }
+        }, {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                if (!idiomComponents.has(idiom)) {
+                    idiomComponents.set(idiom, { state: {}, comps: new Set() });
+                }
+
+                var _idiomComponents$get = idiomComponents.get(idiom),
+                    state = _idiomComponents$get.state,
+                    comps = _idiomComponents$get.comps;
+
+                comps.add(this);
+            }
+        }, {
+            key: "componentWillUnmount",
+            value: function componentWillUnmount() {
+                if (!idiomComponents.has(idiom)) {
+                    idiomComponents.set(idiom, { state: {}, comps: new Set() });
+                }
+
+                var _idiomComponents$get2 = idiomComponents.get(idiom),
+                    comps = _idiomComponents$get2.comps;
+
+                comps.delete(this);
+            }
+        }], [{
+            key: "setState",
+            value: function setState(state) {
+                if (!idiomComponents.has(idiom)) {
+                    idiomComponents.set(idiom, { state: {}, comps: new Set() });
+                }
+                var obj = idiomComponents.get(idiom);
+                obj.state = state;
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = obj.comps[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var comp = _step.value;
+
+                        comp.setState(state);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+            }
+        }, {
+            key: "getState",
+            value: function getState() {
+                if (!idiomComponents.has(idiom)) {
+                    idiomComponents.set(idiom, { state: {}, comps: new Set() });
+                }
+
+                var _idiomComponents$get3 = idiomComponents.get(idiom),
+                    state = _idiomComponents$get3.state;
+
+                return state;
             }
         }]);
 
@@ -10011,8 +10083,6 @@ module.exports = function (regExp, replace) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_dom_1 = __webpack_require__(347);
 var Contacts_1 = __webpack_require__(356);
-var registration_1 = __webpack_require__(97);
-registration_1.registerGUIManager(Contacts_1.Manager);
 react_dom_1.render(React.createElement(Contacts_1.Manager.Renderable, null), document.getElementById("app"));
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
@@ -29859,10 +29929,10 @@ function StandardCRUD(components) {
 var default_1 = function (_GUIManager_1$default) {
     _inherits(default_1, _GUIManager_1$default);
 
-    function default_1() {
+    function default_1(t) {
         _classCallCheck(this, default_1);
 
-        var _this = _possibleConstructorReturn(this, (default_1.__proto__ || Object.getPrototypeOf(default_1)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (default_1.__proto__ || Object.getPrototypeOf(default_1)).call(this, t));
 
         _this.component = StandardCRUD;
         _this.requirements = [{
@@ -29874,6 +29944,7 @@ var default_1 = function (_GUIManager_1$default) {
             actions: null,
             provides: ["singleEntityReader"]
         }];
+        _this.postConstruct();
         return _this;
     }
 
@@ -29922,10 +29993,10 @@ var GUIManager = function () {
 
         this.__components = null;
         this.Renderable = function () {
-            return _this.component(_this.findComponents());
+            return _this.component(_this.__components);
         };
         this.task = task;
-        this.setup(registration_1.actions);
+        registration_1.registerGUIManager(this);
     }
     /**
      * Hacky, but it has to happen post-construction
@@ -29933,10 +30004,10 @@ var GUIManager = function () {
 
 
     _createClass(GUIManager, [{
-        key: "findComponents",
-        value: function findComponents() {
-            if (this.__components) return this.__components;
+        key: "postConstruct",
+        value: function postConstruct() {
             var pairs = registration_1.matchRequirements(this.requirements);
+            this.__metRequirements = pairs;
             var components = {};
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
@@ -29969,7 +30040,7 @@ var GUIManager = function () {
             }
 
             this.__components = components;
-            return this.__components;
+            this.setup(registration_1.actions);
         }
     }, {
         key: "getProvider",

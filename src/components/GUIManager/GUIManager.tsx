@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import Task from "../../tasks/Task";
 import Idiom from "../Idiom/Idiom"
-import { Requirements, Provide, matchRequirements, actions } from "./registration";
+import { Requirements, Provide, matchRequirements, actions, registerGUIManager } from "./registration";
 
 export type NamedRequirements = { name: string } & Requirements;
 
@@ -16,28 +16,28 @@ export default abstract class GUIManager {
     public readonly task: Task;
     constructor(task: Task) {
         this.task = task;
-        this.setup(actions);
+        registerGUIManager(this);
     }
     protected abstract setup(act: typeof actions): void
     protected abstract component: (components: { [key: string]: ((state: {}) => ReactElement<{}>) }) => ReactElement<{}>
     protected abstract readonly requirements: NamedRequirements[];
     private __components: { [key: string]: ((state: {}) => ReactElement<{}>) } = null as any;
-    private __metRequirements: [Requirements, Idiom][];
+    private __metRequirements: [NamedRequirements, Idiom][];
     /**
      * Hacky, but it has to happen post-construction
      */
-    private findComponents() {
-        if (this.__components) return this.__components;
+    protected postConstruct() {
         const pairs = matchRequirements(this.requirements);
+        this.__metRequirements = pairs;
         const components: {[key: string]: ((state: {}) => ReactElement<{}>)} = {};
         for (const [{ name }, { component }] of pairs) {
             components[name] = component as any;
         }
         this.__components = components;
-        return this.__components;
+        this.setup(actions);
     };
     Renderable = () => {
-        return this.component(this.findComponents());
+        return this.component(this.__components);
     }
     getProvider<T extends keyof Provide>(provides: T): (...args: any[]) => any {
         for (const [, idiom] of this.__metRequirements) {
